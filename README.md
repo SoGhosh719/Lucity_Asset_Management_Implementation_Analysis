@@ -1,6 +1,3 @@
-
-### **`README.md` - Lucity Asset Management Implementation & Analysis**  
-
 # **Lucity Asset Management Implementation & Analysis**  
 
 ### **Project Overview**  
