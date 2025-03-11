@@ -1,6 +1,12 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from fpdf import FPDF
+
+# Ensure the reports directory exists
+REPORTS_DIR = "reports"
+if not os.path.exists(REPORTS_DIR):
+    os.makedirs(REPORTS_DIR)
 
 # Load data
 assets = pd.read_csv("data/updated_assets.csv")
@@ -17,7 +23,11 @@ plt.xlabel("Condition")
 plt.ylabel("Number of Assets")
 plt.xticks(rotation=0)
 plt.grid(axis='y', linestyle="--", alpha=0.7)
-plt.savefig("reports/asset_condition_chart.png")  # Save chart
+
+# Save chart in reports directory
+chart_path = os.path.join(REPORTS_DIR, "asset_condition_chart.png")
+plt.savefig(chart_path)
+plt.close()
 
 # Create a PDF Report
 pdf = FPDF()
@@ -43,8 +53,9 @@ for status, count in work_order_status.items():
 
 # Add the chart image
 pdf.ln(10)
-pdf.image("reports/asset_condition_chart.png", x=40, w=120)
+pdf.image(chart_path, x=40, w=120)
 
 # Save the PDF report
-pdf.output("reports/asset_management_report.pdf")
-print("Report generated successfully!")
+pdf_path = os.path.join(REPORTS_DIR, "asset_management_report.pdf")
+pdf.output(pdf_path)
+print(f"Report generated successfully! Saved as: {pdf_path}")
